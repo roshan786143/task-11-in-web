@@ -12,6 +12,7 @@ function saveToLocalStorage(event) {
     category,
   };
 
+//posting the new user details on to the server.
 
   axios.post("https://crudcrud.com/api/14678404bf4b4997bbc6155bef06b246/UsersData",obj)
   .then((response)=>{
@@ -43,6 +44,23 @@ function load() {
     showNewExpenseOnScreen(userExpensesObj);
     console.log(userExpensesObj);
   }
+
+//getting all the user details from the server and showing them on the screen.
+
+  axios.get("https://crudcrud.com/api/14678404bf4b4997bbc6155bef06b246/UsersData")
+  .then((response)=>{
+    // showNewExpenseOnScreen(response.data[6])
+    console.log(response)
+    response = response.data
+    response.forEach(user => {
+      showNewExpenseOnScreen(user);
+    });
+    console.log("--------------------------------")
+    // console.log(response.data[6])
+})
+.catch((error)=>{
+  console.log(error)
+})
 }
 
 function showNewExpenseOnScreen(expense) {
