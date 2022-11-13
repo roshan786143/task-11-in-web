@@ -54,9 +54,10 @@ function load() {
     response = response.data
     response.forEach(user => {
       showNewExpenseOnScreen(user);
+      console.log(user._id)
     });
     console.log("--------------------------------")
-    // console.log(response.data[6])
+    // console.log(user)
 })
 .catch((error)=>{
   console.log(error)
@@ -74,7 +75,7 @@ function showNewExpenseOnScreen(expense) {
 
   const parentNode = document.getElementById("listOfExpenses");
   const childHTML = `<li id=${expense.description}> ${expense.amount} - ${expense.description} - ${expense.category}
-                                        <button onclick=deleteUser('${expense.description}')> Delete Expense </button>
+                                        <button onclick=deleteUser('${expense.description}','${expense._id}')> Delete Expense </button>
                                  <button onclick=editUserDetails('${expense.amount}','${expense.description}','${expense.category}')>Edit Expense </button>
                                      </li>`;
 
@@ -93,10 +94,21 @@ function editUserDetails(amount, description, category) {
 
 // deleteUser('abc@gmail.com')
 
-function deleteUser(description) {
+function deleteUser(description,id) {
   console.log(description);
+  console.log(id+"************************************")
   localStorage.removeItem(description);
-  removeUserFromScreen(description);
+
+//delete user from the server as well as from the screen
+
+axios.delete(`https://crudcrud.com/api/14678404bf4b4997bbc6155bef06b246/UsersData/${id}`)
+.then(()=>{
+  removeUserFromScreen(description)
+})
+.catch((error)=>{
+  console.log(error)
+})
+
 }
 
 function removeUserFromScreen(description) {
