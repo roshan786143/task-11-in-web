@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Project</title>
+</head>
+<body>
+    <form onsubmit="saveToLocalStorage(event)">
+        <label> Choose Expense Amount : </label>
+            <input id='amount' type="text" name="amount"  required/>
+            <label> Choose description : </label>
+            <input id='description' type="text" name="description"  required/>
+            <label> Choose a Category : </label>
+            <select name="category" id="category" required>
+                <option value="movie">Movies</option>
+                <option value="party">Parties</option>
+                <option value="netflix">OTT</option>
+                <option value="trip">Trip</option>
+            </select>
+            <button id="btn"> addExpense </button>
+        </form>
+        <ul id='listOfExpenses'></ul>
+        <script src="app.js" async></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.3/axios.min.js"></script>
+    </body>
+</html>
+
