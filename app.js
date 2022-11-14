@@ -14,7 +14,7 @@ function saveToLocalStorage(event) {
 
 //posting the new user details on to the server.
 
-  axios.post("https://crudcrud.com/api/14678404bf4b4997bbc6155bef06b246/UsersData",obj)
+  axios.post("https://crudcrud.com/api/4debd13dab14439fba870e9c87569906/UsersData",obj)
   .then((response)=>{
     showNewExpenseOnScreen(response.data);
     console.log(response)
@@ -47,7 +47,7 @@ function load() {
 
 //getting all the user details from the server and showing them on the screen.
 
-  axios.get("https://crudcrud.com/api/14678404bf4b4997bbc6155bef06b246/UsersData")
+  axios.get("https://crudcrud.com/api/4debd13dab14439fba870e9c87569906/UsersData")
   .then((response)=>{
     // showNewExpenseOnScreen(response.data[6])
     console.log(response)
@@ -76,7 +76,7 @@ function showNewExpenseOnScreen(expense) {
   const parentNode = document.getElementById("listOfExpenses");
   const childHTML = `<li id=${expense.description}> ${expense.amount} - ${expense.description} - ${expense.category}
                                         <button onclick=deleteUser('${expense.description}','${expense._id}')> Delete Expense </button>
-                                 <button onclick=editUserDetails('${expense.amount}','${expense.description}','${expense.category}')>Edit Expense </button>
+                                 <button onclick=editUserDetails('${expense.amount}','${expense.description}','${expense.category}','${expense._id}')>Edit Expense </button>
                                      </li>`;
 
   parentNode.innerHTML = parentNode.innerHTML + childHTML;
@@ -84,10 +84,20 @@ function showNewExpenseOnScreen(expense) {
 
 //Edit User
 
-function editUserDetails(amount, description, category) {
+function editUserDetails(amount, description, category,id) {
+
+  //update user details on the server.
+
   document.getElementById("amount").value = amount;
   document.getElementById("description").value = description;
   document.getElementById("category").value = category;
+
+  console.log(id)
+  // console.log(amount,description,category,id+"///////////////////////")
+
+  deleteUser(description,id)
+
+  // saveToLocalStorage();
 
   // deleteUser(description);
 }
@@ -96,12 +106,12 @@ function editUserDetails(amount, description, category) {
 
 function deleteUser(description,id) {
   console.log(description);
-  console.log(id+"************************************")
+  // console.log(id+"************************************")
   localStorage.removeItem(description);
 
 //delete user from the server as well as from the screen
 
-axios.delete(`https://crudcrud.com/api/14678404bf4b4997bbc6155bef06b246/UsersData/${id}`)
+axios.delete(`https://crudcrud.com/api/4debd13dab14439fba870e9c87569906/UsersData/${id}`)
 .then(()=>{
   removeUserFromScreen(description)
 })
